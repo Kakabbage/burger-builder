@@ -1,12 +1,12 @@
 import React from 'react';
-import classes from './BuildControls.css';
 import BuildControl from './BuildControl';
+import classes from './BuildControls.css';
 
 const controls = [
-  {label: 'Salad', type: 'salad'},
-  {label: 'Bacon', type: 'bacon'},
-  {label: 'Cheese', type: 'cheese'},
-  {label: 'Meat', type: 'meat'},
+  {label : 'Salad', type : 'salad'},
+  {label : 'Bacon', type : 'bacon'},
+  {label : 'Cheese', type : 'cheese'},
+  {label : 'Meat', type : 'meat'},
 ];
 
 const buildControls = (props) => (
@@ -21,6 +21,12 @@ const buildControls = (props) => (
         removed={() => props.ingredientRemoved(ingred.type)}
         disabled={props.disabled[ingred.type]}
       />))}
+  
+    <button
+      className={classes.OrderButton}
+      disabled={!props.purchasable}
+    >ORDER NOW
+    </button>
   </div>
 );
 
