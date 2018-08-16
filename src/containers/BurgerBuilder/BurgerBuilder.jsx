@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
+import BuildControls from '../../components/Burger/BuildControls';
 import Burger from '../../components/Burger/Burger';
-import BuildControls from '../../components/BurgerBuildControls/BuildControls';
+import OrderSummary from '../../components/Burger/OrderSummary';
+import Modal from '../../components/UI/Modal';
 import Auxi from '../../hoc/Auxi';
 
-const INITIAL_PRICE = 1.2;
+const INITIAL_PRICE = 1.20;
 const INGREDIENT_PRICE = {
   salad  : 0.5,
   cheese : 0.4,
@@ -21,17 +23,20 @@ class BurgerBuilder extends Component {
     },
     price       : INITIAL_PRICE,
     purchasable : false,
+    purchasing  : false,
   };
+  
   addIngredient = (type) => {
     const updatedIngredients = {...this.state.ingredients};
     updatedIngredients[type] = updatedIngredients[type] + 1;
     
     // const priceDiff = INGREDIENT_PRICE[type];
     const newPrice = this.state.price + INGREDIENT_PRICE[type];
-  
+    
     this.setState({ingredients : updatedIngredients, price : newPrice});
     this.updatePurchaseState(newPrice);
   };
+  
   removeIngredient = (type) => {
     const updatedIngredients = {...this.state.ingredients};
     if (updatedIngredients[type] <= 0) return;
@@ -41,6 +46,18 @@ class BurgerBuilder extends Component {
   
     this.setState({ingredients : updatedIngredients, price : newPrice});
     this.updatePurchaseState(newPrice);
+  };
+  
+  handlePurchase = () => {
+    this.setState({purchasing : true});
+  };
+  
+  cancelPurchasing = () => {
+    this.setState({purchasing : false});
+  };
+  
+  continuePurchasing = () => {
+    alert('Not yet implemented!');
   };
   
   updatePurchaseState (price) {
@@ -57,6 +74,13 @@ class BurgerBuilder extends Component {
     
     return (
       <Auxi>
+        <Modal show={this.state.purchasing} closeModal={this.cancelPurchasing}>
+          <OrderSummary ingredients={this.state.ingredients}
+                        cancelPurchasing={this.cancelPurchasing}
+                        continuePurchasing={this.continuePurchasing}
+                        price={this.state.price}
+          />
+        </Modal>
         <Burger ingredients={this.state.ingredients} />
         <BuildControls
           purchasable={this.state.purchasable}
@@ -64,6 +88,7 @@ class BurgerBuilder extends Component {
           ingredientAdded={this.addIngredient}
           ingredientRemoved={this.removeIngredient}
           disabled={disabledInfo}
+          ordered={this.handlePurchase}
         />
       </Auxi>
     );
