@@ -5,22 +5,22 @@ import Auxi from './Auxi';
 const handleError = (WrappedComponent, axios) => {
   return class extends Component {
     state = {
-      error : null,
+      error: null,
     };
     
     confirmError = () => {
-      this.setState({error : null});
+      this.setState({error: null});
     };
     
     componentWillMount () {
       this.reqInterceptor = axios.interceptors.request.use(req => {
-        this.setState({error : null});
+        this.setState({error: null});
         return req;
       });
       
-      this.resInterceptor = axios.interceptors.response.use(res => res, err => {
-        this.setState({error : err});
-      });
+      this.resInterceptor = axios.interceptors.response.use(
+        res => res,
+        err => {this.setState({error: err});});
     }
     
     componentWillUnmount () {

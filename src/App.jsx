@@ -1,12 +1,10 @@
 import React, {Component} from 'react';
 import BurgerBuilder from './containers/BurgerBuilder/BurgerBuilder';
 import Layout from './hoc/Layout';
+import Checkout from "./containers/Checkout/Checkout";
+import {Route} from 'react-router-dom'
 
 class App extends Component {
-  state = {
-    show : true,
-  };
-  
   // componentDidMount () {
   //   setTimeout(() => {
   //     this.setState({show : false});
@@ -18,7 +16,8 @@ class App extends Component {
     return (
       <div>
         <Layout>
-          {this.state.show ? <BurgerBuilder /> : null}
+          <Route exact path="/" component={BurgerBuilder}/>
+          <Route path="/checkout" component={Checkout}/>
         </Layout>
       </div>
     );
