@@ -2,6 +2,7 @@
   <dictionary name="kakabbage">
     <words>
       <w>diplay</w>
+      <w>textarea</w>
     </words>
   </dictionary>
 </component>
